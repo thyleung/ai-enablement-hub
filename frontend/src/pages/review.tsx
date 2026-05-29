@@ -55,7 +55,6 @@ export default function ReviewPage() {
           <div className="wide-container">
             <div className="page-header">
               <h1>Review Queue</h1>
-              <p>Submitted intake requests from across the organization. Click a row to expand details.</p>
             </div>
 
             {loading && (

@@ -8,17 +8,13 @@ import { submitIntakeRequest, reviewRequest } from '@/lib/api';
 import type { IntakeFormData, ReviewResponse } from '@/types';
 
 const DEPARTMENTS = [
-  { value: 'engineering', label: 'Engineering' },
-  { value: 'product', label: 'Product' },
-  { value: 'design', label: 'Design' },
-  { value: 'data', label: 'Data & Analytics' },
-  { value: 'operations', label: 'Operations' },
-  { value: 'finance', label: 'Finance' },
-  { value: 'hr', label: 'Human Resources' },
-  { value: 'legal', label: 'Legal & Compliance' },
-  { value: 'marketing', label: 'Marketing' },
-  { value: 'sales', label: 'Sales' },
-  { value: 'it', label: 'IT & Infrastructure' },
+  { value: 'retail', label: 'Retail Banking' },
+  { value: 'commercial', label: 'Commercial Banking' },
+  { value: 'wealth', label: 'Wealth' },
+  { value: 'capital', label: 'Capital Markets' },
+  { value: 'risk', label: 'Risk' },
+  { value: 'compliance', label: 'Compliance' },
+  { value: 'audit', label: 'Internal Audit' },
   { value: 'other', label: 'Other' },
 ];
 
@@ -120,7 +116,7 @@ export default function IntakePage() {
           <div className="content-container">
             <div className="page-header">
               <h1>Submit an AI Enablement Request</h1>
-              <p>Share your idea or challenge with the AI Enablement team. You do not need a finished plan -- just tell us what is on your mind.</p>
+              <p>Share your idea or challenge with the AI Enablement team.</p>
             </div>
 
             <form className="form-card" onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -166,14 +162,11 @@ export default function IntakePage() {
               <section className="form-section">
                 <div className="form-section-header">
                   <h2 className="form-section-title">Request Details</h2>
-                  <p className="form-section-description">Describe the problem and what success would look like. Rough ideas are welcome.</p>
                 </div>
                 <div className="form-grid">
                   <Input
                     label="Project Title"
                     required
-                    placeholder="A short name for this project or idea"
-                    hint="A brief working title helps us track this request."
                     error={errors.project_title?.message}
                     {...register('project_title', {
                       required: 'Please give your project a title.',
@@ -183,18 +176,14 @@ export default function IntakePage() {
                   <TextArea
                     label="What problem are you trying to solve?"
                     required
-                    rows={4}
-                    placeholder="Describe the challenge or opportunity you have identified..."
-                    hint="You do not need technical language -- just explain what is slowing your team down."
+                    rows={3}
                     error={errors.business_problem?.message}
                     {...register('business_problem', { required: 'Please describe the problem you are trying to solve.' })}
                   />
                   <TextArea
                     label="What would a good outcome look like?"
                     required
-                    rows={4}
-                    placeholder="Describe what done or better looks like for your team..."
-                    hint="Even a rough description of the desired result is helpful."
+                    rows={3}
                     error={errors.desired_outcome?.message}
                     {...register('desired_outcome', { required: 'Please describe what a good outcome would look like.' })}
                   />
@@ -204,21 +193,18 @@ export default function IntakePage() {
               <section className="form-section">
                 <div className="form-section-header">
                   <h2 className="form-section-title">Optional Context</h2>
-                  <p className="form-section-description">These fields are optional but help us route and scope your request more quickly.</p>
                 </div>
                 <div className="form-grid">
                   <TextArea
                     label="Systems or data involved"
                     rows={3}
                     placeholder="e.g. Salesforce, internal data warehouse, customer records..."
-                    hint="Which tools, platforms, or data sources does this project involve?"
                     {...register('systems_involved')}
                   />
                   <Select
                     label="Sensitivity level"
                     options={SENSITIVITY_OPTIONS}
                     placeholder="Select a sensitivity level (optional)"
-                    hint="Helps the team apply the right data handling practices from the start."
                     {...register('sensitivity_level')}
                   />
                 </div>

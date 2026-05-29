@@ -19,7 +19,7 @@ export default function Header() {
             href="/"
             className={`nav-link${router.pathname === '/' ? ' active' : ''}`}
           >
-            Submit Request
+            Submit Request View
           </Link>
 
           <span className="nav-divider" aria-hidden="true" />
