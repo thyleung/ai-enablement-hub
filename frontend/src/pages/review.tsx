@@ -51,7 +51,7 @@ export default function ReviewPage() {
 
   return (
     <>
-      <Head><title>Review Queue — AI Enablement Hub</title></Head>
+      <Head><title>Review Queue: AI Enablement Hub</title></Head>
       <div className="page-wrapper">
         <Header />
         <main className="main-content">

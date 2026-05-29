@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
 import Header from '@/components/layout/Header';
-import { Button, Input, TextArea, Select, LoadingSpinner } from '@/components/ui';
+import { Button, Input, TextArea, Select } from '@/components/ui';
 import GuidancePanel from '@/components/ui/GuidancePanel';
 import { submitIntakeRequest, reviewRequest } from '@/lib/api';
 import type { IntakeFormData, ReviewResponse } from '@/types';
@@ -23,10 +23,10 @@ const DEPARTMENTS = [
 ];
 
 const SENSITIVITY_OPTIONS = [
-  { value: 'public', label: 'Public — No data restrictions' },
-  { value: 'internal', label: 'Internal — For employees only' },
-  { value: 'confidential', label: 'Confidential — Restricted audience' },
-  { value: 'restricted', label: 'Restricted — Highest sensitivity' },
+  { value: 'public', label: 'Public - No data restrictions' },
+  { value: 'internal', label: 'Internal - For employees only' },
+  { value: 'confidential', label: 'Confidential - Restricted audience' },
+  { value: 'restricted', label: 'Restricted - Highest sensitivity' },
 ];
 
 type FormState = 'idle' | 'reviewing' | 'submitting' | 'success';
@@ -42,7 +42,18 @@ export default function IntakePage() {
     getValues,
     formState: { errors },
   } = useForm<IntakeFormData>({
-    mode: 'onBlur',
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
+    defaultValues: {
+      name: '',
+      contact_email: '',
+      department: '',
+      project_title: '',
+      business_problem: '',
+      desired_outcome: '',
+      systems_involved: '',
+      sensitivity_level: '',
+    },
   });
 
   async function handleReview() {
@@ -54,13 +65,7 @@ export default function IntakePage() {
       setGuidance(result);
     } catch {
       setGuidance({
-        suggestions: [
-          {
-            type: 'info',
-            field: null,
-            text: 'We couldn\'t reach the review service right now. You can still submit your request.',
-          },
-        ],
+        suggestions: [{ type: 'info', field: null, text: "We couldn't reach the review service right now. You can still submit your request." }],
         encouragement: '',
       });
     } finally {
@@ -74,7 +79,7 @@ export default function IntakePage() {
     try {
       await submitIntakeRequest(data);
       setFormState('success');
-    } catch (err) {
+    } catch {
       setFormState('idle');
       setSubmitError('Something went wrong submitting your request. Please try again.');
     }
@@ -83,18 +88,15 @@ export default function IntakePage() {
   if (formState === 'success') {
     return (
       <>
-        <Head><title>Request Submitted — AI Enablement Hub</title></Head>
+        <Head><title>Request Submitted - AI Enablement Hub</title></Head>
         <div className="page-wrapper">
           <Header />
           <main className="main-content">
             <div className="content-container">
               <div className="success-card">
-                <div className="success-icon" aria-hidden="true">✓</div>
+                <div className="success-icon" aria-hidden="true">&#10003;</div>
                 <h2>Request submitted</h2>
-                <p>
-                  Your request has been received by the AI Enablement team. We'll review it and
-                  be in touch to discuss next steps.
-                </p>
+                <p>Your request has been received by the AI Enablement team. We will review it and be in touch to discuss next steps.</p>
                 <Button variant="secondary" onClick={() => window.location.reload()}>
                   Submit another request
                 </Button>
@@ -111,26 +113,18 @@ export default function IntakePage() {
 
   return (
     <>
-      <Head><title>Submit a Request — AI Enablement Hub</title></Head>
+      <Head><title>Submit a Request - AI Enablement Hub</title></Head>
       <div className="page-wrapper">
         <Header />
         <main className="main-content">
           <div className="content-container">
             <div className="page-header">
               <h1>Submit an AI Enablement Request</h1>
-              <p>
-                Share your idea or challenge with the AI Enablement team. You don't need a
-                finished plan — just tell us what's on your mind.
-              </p>
+              <p>Share your idea or challenge with the AI Enablement team. You do not need a finished plan -- just tell us what is on your mind.</p>
             </div>
 
-            <form
-              className="form-card"
-              onSubmit={handleSubmit(onSubmit)}
-              noValidate
-              aria-label="AI Enablement intake form"
-            >
-              {/* ── Section 1: Contact ── */}
+            <form className="form-card" onSubmit={handleSubmit(onSubmit)} noValidate>
+
               <section className="form-section">
                 <div className="form-section-header">
                   <h2 className="form-section-title">Contact Information</h2>
@@ -142,9 +136,7 @@ export default function IntakePage() {
                     autoComplete="name"
                     placeholder="Your full name"
                     error={errors.name?.message}
-                    {...register('name', {
-                      required: 'Please enter your name.',
-                    })}
+                    {...register('name', { required: 'Please enter your name.' })}
                   />
                   <Input
                     label="Contact Email"
@@ -155,10 +147,7 @@ export default function IntakePage() {
                     error={errors.contact_email?.message}
                     {...register('contact_email', {
                       required: 'Please enter your email address.',
-                      pattern: {
-                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: 'Please enter a valid email address.',
-                      },
+                      pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Please enter a valid email address.' },
                     })}
                   />
                   <Select
@@ -174,13 +163,10 @@ export default function IntakePage() {
                 </div>
               </section>
 
-              {/* ── Section 2: Request Details ── */}
               <section className="form-section">
                 <div className="form-section-header">
                   <h2 className="form-section-title">Request Details</h2>
-                  <p className="form-section-description">
-                    Describe the problem and what success would look like. Rough ideas are welcome.
-                  </p>
+                  <p className="form-section-description">Describe the problem and what success would look like. Rough ideas are welcome.</p>
                 </div>
                 <div className="form-grid">
                   <Input
@@ -191,50 +177,40 @@ export default function IntakePage() {
                     error={errors.project_title?.message}
                     {...register('project_title', {
                       required: 'Please give your project a title.',
-                      maxLength: {
-                        value: 500,
-                        message: 'Title must be 500 characters or fewer.',
-                      },
+                      maxLength: { value: 500, message: 'Title must be 500 characters or fewer.' },
                     })}
                   />
                   <TextArea
                     label="What problem are you trying to solve?"
                     required
                     rows={4}
-                    placeholder="Describe the challenge, inefficiency, or opportunity you've identified…"
-                    hint="You don't need technical language — just explain what's slowing your team down."
+                    placeholder="Describe the challenge or opportunity you have identified..."
+                    hint="You do not need technical language -- just explain what is slowing your team down."
                     error={errors.business_problem?.message}
-                    {...register('business_problem', {
-                      required: 'Please describe the problem you're trying to solve.',
-                    })}
+                    {...register('business_problem', { required: 'Please describe the problem you are trying to solve.' })}
                   />
                   <TextArea
                     label="What would a good outcome look like?"
                     required
                     rows={4}
-                    placeholder="Describe what 'done' or 'better' looks like for your team…"
+                    placeholder="Describe what done or better looks like for your team..."
                     hint="Even a rough description of the desired result is helpful."
                     error={errors.desired_outcome?.message}
-                    {...register('desired_outcome', {
-                      required: 'Please describe what a good outcome would look like.',
-                    })}
+                    {...register('desired_outcome', { required: 'Please describe what a good outcome would look like.' })}
                   />
                 </div>
               </section>
 
-              {/* ── Section 3: Optional Context ── */}
               <section className="form-section">
                 <div className="form-section-header">
                   <h2 className="form-section-title">Optional Context</h2>
-                  <p className="form-section-description">
-                    These fields are optional but help us route and scope your request more quickly.
-                  </p>
+                  <p className="form-section-description">These fields are optional but help us route and scope your request more quickly.</p>
                 </div>
                 <div className="form-grid">
                   <TextArea
                     label="Systems or data involved"
                     rows={3}
-                    placeholder="e.g. Salesforce, internal data warehouse, customer records, HR platform…"
+                    placeholder="e.g. Salesforce, internal data warehouse, customer records..."
                     hint="Which tools, platforms, or data sources does this project involve?"
                     {...register('systems_involved')}
                   />
@@ -248,7 +224,6 @@ export default function IntakePage() {
                 </div>
               </section>
 
-              {/* ── Actions ── */}
               <div className="form-actions">
                 <Button
                   type="button"
@@ -256,9 +231,8 @@ export default function IntakePage() {
                   onClick={handleReview}
                   loading={isReviewing}
                   disabled={isSubmitting || isReviewing}
-                  aria-label="Review your draft request for suggestions"
                 >
-                  {isReviewing ? 'Reviewing…' : 'Review My Request'}
+                  {isReviewing ? 'Reviewing...' : 'Review My Request'}
                 </Button>
 
                 <Button
@@ -267,7 +241,7 @@ export default function IntakePage() {
                   loading={isSubmitting}
                   disabled={isSubmitting || isReviewing}
                 >
-                  {isSubmitting ? 'Submitting…' : 'Submit Request'}
+                  {isSubmitting ? 'Submitting...' : 'Submit Request'}
                 </Button>
 
                 {submitError && (
@@ -277,8 +251,8 @@ export default function IntakePage() {
                 )}
               </div>
 
-              {/* ── Guidance Panel ── */}
               {guidance && <GuidancePanel review={guidance} />}
+
             </form>
           </div>
         </main>

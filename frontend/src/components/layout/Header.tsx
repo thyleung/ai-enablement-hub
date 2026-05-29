@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import '@/styles/header.css';
 
 export default function Header() {
   const router = useRouter();
@@ -28,7 +27,7 @@ export default function Header() {
           <Link
             href="/review"
             className={`nav-link-reviewer${router.pathname === '/review' ? ' active' : ''}`}
-            title="Internal reviewer view — demo only"
+            title="Internal reviewer view: demo only"
           >
             Reviewer View
           </Link>
