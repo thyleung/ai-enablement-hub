@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: ai-enablement-hub-api
+    env: python
+    buildCommand: pip install -r requirements.txt && python manage.py migrate --noinput && python manage.py collectstatic --noinput
+    startCommand: gunicorn ai_enablement_hub.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: your-render-subdomain.onrender.com
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://your-vercel-domain.vercel.app
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai-enablement-hub-db
+          property: connectionString
+
+databases:
+  - name: ai-enablement-hub-db
+    databaseName: ai_enablement_hub
+    user: ai_enablement_hub
