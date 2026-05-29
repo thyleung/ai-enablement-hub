@@ -1,4 +1,4 @@
-# 💡 AI Enablement Hub
+# AI Enablement Hub
 
 An enterprise AI intake and review workflow built with Next.js, Django REST Framework, and PostgreSQL.
 
