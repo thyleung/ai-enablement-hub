@@ -26,7 +26,17 @@ export interface IntakeRequest {
 
 export type IntakeRequestListItem = Pick<
   IntakeRequest,
-  'id' | 'name' | 'department' | 'project_title' | 'sensitivity_level' | 'status' | 'created_at'
+  | 'id'
+  | 'name'
+  | 'contact_email'
+  | 'department'
+  | 'project_title'
+  | 'business_problem'
+  | 'desired_outcome'
+  | 'systems_involved'
+  | 'sensitivity_level'
+  | 'status'
+  | 'created_at'
 >;
 
 // ─── Form Data ──────────────────────────────────────────────────────────────

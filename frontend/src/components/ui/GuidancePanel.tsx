@@ -1,35 +1,42 @@
-import type { ReviewResponse, Suggestion } from '@/types';
+import type { ReviewResponse } from '@/types';
 
 interface GuidancePanelProps {
   review: ReviewResponse;
 }
 
 export default function GuidancePanel({ review }: GuidancePanelProps) {
+  const actionable = review.suggestions
+    .filter((s) => s.type !== 'ready' && s.type !== 'info')
+    .slice(0, 3);
+
+  if (actionable.length === 0) return null;
+
   return (
-    <div className="guidance-panel" role="region" aria-label="Request review suggestions">
-      <p className="guidance-panel-title">Suggestions to strengthen your request</p>
-
-      {review.encouragement && (
-        <p className="guidance-encouragement">{review.encouragement}</p>
-      )}
-
-      {review.suggestions.length > 0 && (
-        <ul className="guidance-suggestions" aria-label="Suggestions">
-          {review.suggestions.map((suggestion, i) => (
-            <SuggestionItem key={i} suggestion={suggestion} />
-          ))}
-        </ul>
-      )}
+    <div style={{
+      margin: '16px 32px 32px',
+      padding: '16px 20px',
+      background: '#ffffff',
+      border: '1px solid #e2e2de',
+      borderLeft: '3px solid #b01c2e',
+      borderRadius: '5px',
+    }}>
+      <p style={{
+        fontSize: '0.75rem',
+        fontWeight: 600,
+        textTransform: 'uppercase',
+        letterSpacing: '0.06em',
+        color: '#5a5a56',
+        marginBottom: '10px',
+      }}>
+        Suggestions
+      </p>
+      <ul style={{ listStyle: 'disc', paddingLeft: '18px', margin: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+        {actionable.map((s, i) => (
+          <li key={i} style={{ fontSize: '0.875rem', color: '#3a3a38', lineHeight: '1.55' }}>
+            {s.text}
+          </li>
+        ))}
+      </ul>
     </div>
-  );
-}
-
-function SuggestionItem({ suggestion }: { suggestion: Suggestion }) {
-  const dotClass = `suggestion-dot${suggestion.type === 'ready' ? ' ready' : ''}`;
-  return (
-    <li className="guidance-suggestion">
-      <span className={dotClass} aria-hidden="true" />
-      <span>{suggestion.text}</span>
-    </li>
   );
 }

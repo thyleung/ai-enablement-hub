@@ -23,14 +23,18 @@ class IntakeRequestSerializer(serializers.ModelSerializer):
 
 
 class IntakeRequestListSerializer(serializers.ModelSerializer):
-    """Lighter serializer for list views."""
+    """Serializer for list views -- includes detail fields for expandable rows."""
     class Meta:
         model = IntakeRequest
         fields = [
             'id',
             'name',
+            'contact_email',
             'department',
             'project_title',
+            'business_problem',
+            'desired_outcome',
+            'systems_involved',
             'sensitivity_level',
             'status',
             'created_at',

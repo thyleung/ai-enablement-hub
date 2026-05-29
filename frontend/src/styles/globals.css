@@ -632,3 +632,13 @@ a:hover {
     -webkit-overflow-scrolling: touch;
   }
 }
+
+/* ─── Expandable rows ────────────────────────────────────────────────────── */
+
+.data-table tbody tr[aria-expanded] td {
+  border-bottom: none;
+}
+
+.data-table tbody tr[aria-expanded="true"] {
+  background-color: var(--surface-2);
+}
