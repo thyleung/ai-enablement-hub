@@ -2,16 +2,16 @@
 
 An enterprise AI intake and review workflow built with Next.js, Django REST Framework, and PostgreSQL.
 
+
 ## Live Demo
 
-Frontend: https://... (coming soon)
-
-Backend API: https://ai-enablement-hub-1.onrender.com/api/requests/
+- Frontend: https://ai-enablement-hub-one.vercel.app/
+- Backend API: https://ai-enablement-hub-1.onrender.com/api/requests/
 
 
 ## Features
 
-* Submit AI initiative requests through a streamlined intake form
+* Submit AI initiative requests through an intake form
 * Optional AI-assisted request review
 * Reviewer queue for internal triage
 * Mock Jira handoff workflow
@@ -48,6 +48,7 @@ PostgreSQL
 Mock Integrations
 └── Jira handoff workflow
 ```
+
 
 ## Notes
 
