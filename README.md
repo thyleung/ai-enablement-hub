@@ -2,6 +2,13 @@
 
 An enterprise AI intake and review workflow built with Next.js, Django REST Framework, and PostgreSQL.
 
+## Live Demo
+
+Frontend: https://... (coming soon)
+
+Backend API: https://ai-enablement-hub-1.onrender.com/api/requests/
+
+
 ## Features
 
 * Submit AI initiative requests through a streamlined intake form
@@ -9,6 +16,7 @@ An enterprise AI intake and review workflow built with Next.js, Django REST Fram
 * Reviewer queue for internal triage
 * Mock Jira handoff workflow
 * Accessible, enterprise-focused UI
+
 
 ## Tech Stack
 
@@ -19,6 +27,7 @@ An enterprise AI intake and review workflow built with Next.js, Django REST Fram
 | Backend  | Django REST Framework   |
 | Database | PostgreSQL              |
 | Styling  | Plain CSS               |
+
 
 ## Architecture
 
