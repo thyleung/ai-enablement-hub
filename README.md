@@ -1,7 +1,8 @@
 # AI Enablement Hub
 
-An enterprise AI intake and review workflow built with Next.js, Django REST Framework, and PostgreSQL.
+A take-home project that simulates an enterprise AI intake workflow. Employees submit AI initiatives for review, and enablement teams can track and approve requests before they enter the development process.
 
+Built with Next.js, Django REST Framework, and PostgreSQL.
 
 ## Live Demo
 
